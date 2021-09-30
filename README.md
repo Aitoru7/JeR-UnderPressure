@@ -11,6 +11,8 @@ Aitor Lebrero Barroso, a.lebrero.2019@alumnos.urjc.es, Aitoru7
 
 Jesús Culebras González, j.culebras.2019@alumnos.urjc.es, JesussCG
 
+Marcos Toledo Sánchez, , marcosto29
+
 
 ## Enlace al tablero de Trello:
 https://trello.com/b/Ua3ihzwg/juegos-en-red
