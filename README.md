@@ -8,7 +8,7 @@ En "Under Pressure", te pondrás en los pies de un trabajador en la rocambolesca
 
 ## Integrantes del equipo:
 Aitor Lebrero Barroso, a.lebrero.2019@alumnos.urjc.es, Aitoru7
-
+Jesús Culebras González, j.culebras.2019@alumnos.urjc.es, JesussCG
 
 
 ## Enlace al tablero de Trello:
