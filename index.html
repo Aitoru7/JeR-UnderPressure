@@ -42,11 +42,22 @@
 
     function create ()
     {
+        //Crear la camara
+        this.cameras.main.setBounds(0, 0, 1024, 2048);
+        //Inicializar la camara
+        this.cameras.main.setZoom(1);
+        this.cameras.main.centerOn(0, 0);
 
     }
 
     function update ()
     {
+        //Indicar dodne apunta la camara
+        const cam = this.cameras.main;
+        
+        //Seguimiento de la camara al personaje
+        cam.pan(player.x, player.y, 0, 'Power2');
+        cam.zoomTo(5, 3000);
     }
 
     
