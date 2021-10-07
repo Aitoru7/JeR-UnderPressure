@@ -2,7 +2,7 @@ Tamaño por piso:
 1200x1600
 
 Tamaño total sin suelos:
-1200x8000
+1200x6000
 
 Tamaño de los brodes:
 100 por cada lado
@@ -11,8 +11,8 @@ Tamaño del suelo:
 1200x200:
 
 tamaño total con suelo del edificio:
-1200x9000
+1200x7000
 
 Tamaño del canvas:
-1400x9000 más o menos (habrá que pensar si se pondrá tejado, se dejarán más pixeles por arriba donde poner cielo...)
+1400x8000 más o menos (habrá que pensar si se pondrá tejado, se dejarán más pixeles por arriba donde poner cielo...)
 --Por ejemplo 200 pixeles mas arriba...
