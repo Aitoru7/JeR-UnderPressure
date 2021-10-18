@@ -40,6 +40,13 @@ function create ()
 
     //  Our player2 animations, turning, walking left and walking right.
     
+    /*Game camera
+        //this.cameras.main.setBounds(0, 0, 1024, 2048);
+
+        //this.cameras.main.setZoom(1);
+        //this.cameras.main.centerOn(0, 0);
+    */
+    
     this.anims.create({
         key: 'left',
         frames: this.anims.generateFrameNumbers('robot2', { start: 1, end: 7 }),
@@ -86,12 +93,18 @@ function create ()
 
 function update ()
 {
+    //Camera set on scene
+    //const cam = this.cameras.main;
+    
     if (keys.left.isDown)
     {
         player1.flipX = true;
         player1.setVelocityX(-160);
 
         player1.anims.play('left2', true);
+        
+        //cam.pan(player1.x, player1.y, 0, 'Power2');
+        //cam.zoomTo(5, 3000);
     }
     else if (keys.right.isDown)
     {
@@ -99,12 +112,18 @@ function update ()
         player1.setVelocityX(160);
 
         player1.anims.play('right2', true);
+        
+         //cam.pan(player1.x, player1.y, 0, 'Power2');
+         //cam.zoomTo(5, 3000);
     }
     else
     {
         player1.setVelocityX(0);
 
         player1.anims.play('turn2');
+        
+        //cam.pan(player1.x, player1.y, 0, 'Power2');
+        //cam.zoomTo(5, 3000);
     }
     if (keys.up.isDown) //&& player2.body.touching.down)
     {
@@ -118,6 +137,9 @@ function update ()
         player2.setVelocityX(-160);
 
         player2.anims.play('left', true);
+        
+        //cam.pan(player2.x, player2.y, 0, 'Power2');
+        //cam.zoomTo(5, 3000);
     }
     else if (cursors.right.isDown)
     {
@@ -125,12 +147,18 @@ function update ()
         player2.setVelocityX(160);
 
         player2.anims.play('right', true);
+        
+        //cam.pan(player2.x, player2.y, 0, 'Power2');
+        //cam.zoomTo(5, 3000);
     }
     else
     {
         player2.setVelocityX(0);
 
         player2.anims.play('turn');
+        
+        //cam.pan(player2.x, player2.y, 0, 'Power2');
+        //cam.zoomTo(5, 3000);
     }
     if (cursors.up.isDown) //&& player2.body.touching.down)
     {
