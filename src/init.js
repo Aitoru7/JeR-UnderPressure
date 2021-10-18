@@ -24,8 +24,10 @@ var keys;
 var game = new Phaser.Game(config);
 function preload ()
 {
-    this.load.spritesheet('robot1', 'assets/andar-sheet1.png', { frameWidth: 64, frameHeight: 64 });
-    this.load.spritesheet('robot2', 'assets/andar-sheet.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('robot1', 'assets/andar-sheet1.png', { frameWidth: 40, frameHeight: 50 });
+    this.load.spritesheet('robot2', 'assets/andar-sheet.png', { frameWidth: 40, frameHeight: 50 });
+    this.load.image('stop1', 'assets/player1.png');
+    this.load.image('stop2', 'assets/player2.png');
 }
 
 function create ()
@@ -38,14 +40,7 @@ function create ()
     player1.setBounce(0.2);
     player1.setCollideWorldBounds(true);
 
-    //  Our player2 animations, turning, walking left and walking right.
     
-    /*Game camera
-        //this.cameras.main.setBounds(0, 0, 1024, 2048);
-
-        //this.cameras.main.setZoom(1);
-        //this.cameras.main.centerOn(0, 0);
-    */
     
     this.anims.create({
         key: 'left',
@@ -56,7 +51,7 @@ function create ()
 
     this.anims.create({
         key: 'turn',
-        frames: [ { key: 'robot2', frame: 0 } ],
+        frames: [ { key: 'stop2', frame: 0 } ],
         frameRate: 20
     });
 
@@ -76,7 +71,7 @@ function create ()
 
     this.anims.create({
         key: 'turn2',
-        frames: [ { key: 'robot1', frame: 0 } ],
+        frames: [ { key: 'stop1', frame: 0 } ],
         frameRate: 20
     });
 
@@ -89,22 +84,20 @@ function create ()
     cursors = this.input.keyboard.createCursorKeys();
     keys = this.input.keyboard.addKeys({ up: 'W', left: 'A', down: 'S', right: 'D' });
 
+    this.physics.add.collider(player1, player2, function(player1, player2){
+        player1.setVelocityX(-200);
+        player2.setVelocityX(-200);
+    });
 }
 
 function update ()
 {
-    //Camera set on scene
-    //const cam = this.cameras.main;
-    
     if (keys.left.isDown)
     {
         player1.flipX = true;
         player1.setVelocityX(-160);
 
         player1.anims.play('left2', true);
-        
-        //cam.pan(player1.x, player1.y, 0, 'Power2');
-        //cam.zoomTo(5, 3000);
     }
     else if (keys.right.isDown)
     {
@@ -112,18 +105,12 @@ function update ()
         player1.setVelocityX(160);
 
         player1.anims.play('right2', true);
-        
-         //cam.pan(player1.x, player1.y, 0, 'Power2');
-         //cam.zoomTo(5, 3000);
     }
     else
     {
         player1.setVelocityX(0);
 
         player1.anims.play('turn2');
-        
-        //cam.pan(player1.x, player1.y, 0, 'Power2');
-        //cam.zoomTo(5, 3000);
     }
     if (keys.up.isDown) //&& player2.body.touching.down)
     {
@@ -137,9 +124,6 @@ function update ()
         player2.setVelocityX(-160);
 
         player2.anims.play('left', true);
-        
-        //cam.pan(player2.x, player2.y, 0, 'Power2');
-        //cam.zoomTo(5, 3000);
     }
     else if (cursors.right.isDown)
     {
@@ -147,21 +131,16 @@ function update ()
         player2.setVelocityX(160);
 
         player2.anims.play('right', true);
-        
-        //cam.pan(player2.x, player2.y, 0, 'Power2');
-        //cam.zoomTo(5, 3000);
     }
     else
     {
         player2.setVelocityX(0);
 
         player2.anims.play('turn');
-        
-        //cam.pan(player2.x, player2.y, 0, 'Power2');
-        //cam.zoomTo(5, 3000);
     }
     if (cursors.up.isDown) //&& player2.body.touching.down)
     {
         player2.setVelocityY(-330);
     }
 }
+
