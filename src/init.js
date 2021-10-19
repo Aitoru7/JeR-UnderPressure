@@ -20,6 +20,7 @@ var player1;
 var player2;
 var cursors;
 var keys;
+var gameOver = false;
 
 var game = new Phaser.Game(config);
 function preload ()
@@ -40,7 +41,12 @@ function create ()
     player1.setBounce(0.2);
     player1.setCollideWorldBounds(true);
 
-    
+    /*Here we create the camera
+    this.cameras.main.setBounds(0, 0, 1024, 2048);
+
+    this.cameras.main.setZoom(1);
+    this.cameras.main.centerOn(0, 0);
+    */
     
     this.anims.create({
         key: 'left',
@@ -92,12 +98,22 @@ function create ()
 
 function update ()
 {
+    if (gameOver)
+    {
+        return;
+    }
+    
+    //const cam = this.cameras.main;
+    
     if (keys.left.isDown)
     {
         player1.flipX = true;
         player1.setVelocityX(-160);
 
         player1.anims.play('left2', true);
+        
+        //cam.pan(player1.x, player1.y, 0, 'Power2');
+        //cam.zoomTo(3, 3000);
     }
     else if (keys.right.isDown)
     {
@@ -105,12 +121,18 @@ function update ()
         player1.setVelocityX(160);
 
         player1.anims.play('right2', true);
+        
+        //cam.pan(player1.x, player1.y, 0, 'Power2');
+        //cam.zoomTo(3, 3000);
     }
     else
     {
         player1.setVelocityX(0);
 
         player1.anims.play('turn2');
+        
+        //cam.pan(player1.x, player1.y, 0, 'Power2');
+        //cam.zoomTo(3, 3000);
     }
     if (keys.up.isDown) //&& player2.body.touching.down)
     {
@@ -124,6 +146,9 @@ function update ()
         player2.setVelocityX(-160);
 
         player2.anims.play('left', true);
+        
+        //cam.pan(player2.x, player2.y, 0, 'Power2');
+        //cam.zoomTo(3, 3000);
     }
     else if (cursors.right.isDown)
     {
@@ -131,12 +156,18 @@ function update ()
         player2.setVelocityX(160);
 
         player2.anims.play('right', true);
+        
+        //cam.pan(player2.x, player2.y, 0, 'Power2');
+        //cam.zoomTo(3, 3000);
     }
     else
     {
         player2.setVelocityX(0);
 
         player2.anims.play('turn');
+        
+        //cam.pan(player2.x, player2.y, 0, 'Power2');
+        //cam.zoomTo(3, 3000);
     }
     if (cursors.up.isDown) //&& player2.body.touching.down)
     {
