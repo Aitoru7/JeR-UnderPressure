@@ -1,7 +1,7 @@
 var config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: 1600,
+    height: 1200,
     physics: {
         default: 'arcade',
         arcade: {
@@ -29,10 +29,12 @@ function preload ()
     this.load.spritesheet('robot2', 'assets/andar-sheet.png', { frameWidth: 40, frameHeight: 50 });
     this.load.image('stop1', 'assets/player1.png');
     this.load.image('stop2', 'assets/player2.png');
+    this.load.image('fondo', 'assets/Edificio.png')
 }
 
 function create ()
 {
+    this.physics.add.staticSprite(800, 700,'fondo');
     player1 = this.physics.add.sprite(100, 450, 'robot1');
     player2 = this.physics.add.sprite(100, 450, 'robot2');
 
@@ -91,11 +93,19 @@ function create ()
     keys = this.input.keyboard.addKeys({ up: 'W', left: 'A', down: 'S', right: 'D' });
 
     this.physics.add.collider(player1, player2, function(player1, player2){
-        player1.setVelocityX(-200);
-        player2.setVelocityX(-200);
+        if(player1.flipX==false){
+           player1.setVelocityX(-160);
+        }else{
+            player1.setVelocityX(160); 
+        }
+        if(player2.flipX==false){
+            player2.setVelocityX(-160);
+        }else{
+            player2.setVelocityX(160); 
+        }
     });
 }
-
+//https://phaser.io/examples/v3/category/physics/arcade
 function update ()
 {
     if (gameOver)
@@ -118,7 +128,7 @@ function update ()
     else if (keys.right.isDown)
     {
         player1.flipX = false;
-        player1.setVelocityX(160);
+        player1.setX(player1.x+5);
 
         player1.anims.play('right2', true);
         
@@ -136,14 +146,14 @@ function update ()
     }
     if (keys.up.isDown) //&& player2.body.touching.down)
     {
-        player1.setVelocityY(-330);
+        player1.setY(player1.y-5);
     }
 
 
     if (cursors.left.isDown)
     {
         player2.flipX = true;
-        player2.setVelocityX(-160);
+        player2.setX(player2.x-5);
 
         player2.anims.play('left', true);
         
@@ -153,7 +163,7 @@ function update ()
     else if (cursors.right.isDown)
     {
         player2.flipX = false;
-        player2.setVelocityX(160);
+        player2.setX(player2.x+5);
 
         player2.anims.play('right', true);
         
@@ -171,7 +181,6 @@ function update ()
     }
     if (cursors.up.isDown) //&& player2.body.touching.down)
     {
-        player2.setVelocityY(-330);
+        player2.setY(player2.y-5);
     }
 }
-
