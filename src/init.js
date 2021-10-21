@@ -83,7 +83,6 @@ function create ()
     });
     cursors = this.input.keyboard.createCursorKeys();
     keys = this.input.keyboard.addKeys({ up: 'W', left: 'A', down: 'S', right: 'D' });
-    timedEvent = this.time.delayedCall(3000, onEvent, [], this);
     this.physics.add.collider(player1, player2, function(player1, player2){
         if(player1.flipX == false){
             player1.setAcceleration(-16);
