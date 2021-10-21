@@ -1,3 +1,5 @@
+import Player from "../Clasess/Player.js";
+
 export default class Game extends Phaser.Scene{
     constructor(){
         super({key: 'Game'})
@@ -21,51 +23,8 @@ export default class Game extends Phaser.Scene{
     }
     create(){
         this.wallpaper = this.physics.add.staticImage(800, 600, 'building');
-        this.player1 = this.physics.add.sprite(300, 1000, 'stop1');
-        this.player2 = this.physics.add.sprite(450, 1000, 'stop2');
-    
-        this.player2.setCollideWorldBounds(true, 0.2, 0.2);
-        this.player1.setCollideWorldBounds(true, 0.2, 0.2);
-
-        this.anims.create({
-            key: 'left',
-            frames: this.anims.generateFrameNumbers('robot2', { start: 1, end: 7 }),
-            frameRate: 10,
-            repeat: -1
-        });
-    
-        this.anims.create({
-            key: 'turn',
-            frames: [ { key: 'stop2', frame: 0 } ],
-            frameRate: 20
-        });
-    
-        this.anims.create({
-            key: 'right',
-            frames: this.anims.generateFrameNumbers('robot2', { start: 1, end: 7 }),
-            frameRate: 10,
-            repeat: -1
-        });
-    
-        this.anims.create({
-            key: 'left2',
-            frames: this.anims.generateFrameNumbers('robot1', { start: 1, end: 7 }),
-            frameRate: 10,
-            repeat: -1
-        });
-    
-        this.anims.create({
-            key: 'turn2',
-            frames: [ { key: 'stop1', frame: 0 } ],
-            frameRate: 20
-        });
-    
-        this.anims.create({
-            key: 'right2',
-            frames: this.anims.generateFrameNumbers('robot1', { start: 1, end: 7 }),
-            frameRate: 10,
-            repeat: -1
-        });   
+        this.player1 = new Player(this, 300, 1000, 'robot1', 'stop1');
+        this.player2 = new Player(this, 300, 1000, 'robot2', 'stop2');
     }
     update(){
         if (this.keyA.isDown)
@@ -73,18 +32,18 @@ export default class Game extends Phaser.Scene{
         this.player1.flipX = true;
         this.player1.setX(this.player1.x-5);
 
-        this.player1.anims.play('left2', true);
+        this.player1.anims.play(this.player1.key[0], true);
     }
     else if (this.keyD.isDown)
     {
         this.player1.flipX = false;
         this.player1.setX(this.player1.x+5);
 
-        this.player1.anims.play('right2', true);
+        this.player1.anims.play(this.player1.key[0], true);
     }
     else
     {
-        this.player1.anims.play('turn2');
+        this.player1.anims.play(this.player1.key[1]);
     }
     if (this.keyW.isDown) //&& player2.body.touching.down)
     {
@@ -97,18 +56,18 @@ export default class Game extends Phaser.Scene{
         this.player2.flipX = true;
         this.player2.setX(this.player2.x-5);
 
-        this.player2.anims.play('left', true);
+        this.player2.anims.play(this.player2.key[0], true);
     }
     else if (this.cursors.right.isDown)
     {
         this.player2.flipX = false;
         this.player2.setX(this.player2.x+5);
 
-        this.player2.anims.play('right', true);
+        this.player2.anims.play(this.player2.key[0], true);
     }
     else
     {
-        this.player2.anims.play('turn');
+        this.player2.anims.play(this.player2.key[1]);
     }
     if (this.cursors.up.isDown) //&& player2.body.touching.down)
     {
