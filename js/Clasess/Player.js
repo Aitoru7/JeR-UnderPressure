@@ -13,10 +13,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     init(){
-        this
-        .setBounce(0.2)
-        .setCollideWorldBounds(true)
-        .setGravityY(300)
+        this.setBounce(0.2)
+        this.setCollideWorldBounds(true)
+        this.setGravityY(300)
         this.key=['l','t'];
     }
 
