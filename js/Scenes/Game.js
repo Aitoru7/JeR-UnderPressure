@@ -5,6 +5,7 @@ export default class Game extends Phaser.Scene{
         super({key: 'Game'})
     } 
     init(){
+        this.timer;  
         this.player1;
         this.player2;
         this.wallpaper;
@@ -24,7 +25,9 @@ export default class Game extends Phaser.Scene{
     create(){
         this.wallpaper = this.physics.add.staticImage(800, 600, 'building');
         this.player1 = new Player(this, 300, 1000, 'robot1', 'stop1');
-        this.player2 = new Player(this, 300, 1000, 'robot2', 'stop2');
+        this.player2 = new Player(this, 500, 1000, 'robot2', 'stop2');
+        timer =  this.time.addEvent({callback: () => {this.player2.setAcceleration(0), this.player1.setAcceleration(0)}, delay: 1000, callbackScope: this, loop: true}); 
+        //this.physics.add.collider(this.player1, this.player2, onEvent(this.player1, this.player2));
     }
     update(){
         if (this.keyA.isDown)
