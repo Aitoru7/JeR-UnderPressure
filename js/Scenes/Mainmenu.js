@@ -101,7 +101,7 @@ export default class Mainmenu extends Phaser.Scene{
         if(this.backRectangle.x==400 && this.keyEnter.isDown){
             this.scene.start('Game');
         }else if(this.backRectangle.x==800 && this.keyEnter.isDown){
-
+            this.scene.start('Credits');
         }else if(this.backRectangle.x==1200 && this.keyEnter.isDown){
 
         }
