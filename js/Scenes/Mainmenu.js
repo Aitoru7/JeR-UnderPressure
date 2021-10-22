@@ -4,7 +4,7 @@ export default class Mainmenu extends Phaser.Scene{
     }
 
     init(){
-        this.keyEnter =  this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
+        this.keySpace =  this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.cursors = this.input.keyboard.createCursorKeys();
         this.vez= 0;
     }
@@ -98,11 +98,11 @@ export default class Mainmenu extends Phaser.Scene{
             this.backRectangle.x+=400;
         }
 
-        if(this.backRectangle.x==400 && this.keyEnter.isDown){
+        if(this.backRectangle.x==400 && this.keySpace.isDown){
             this.scene.start('Game');
-        }else if(this.backRectangle.x==800 && this.keyEnter.isDown){
+        }else if(this.backRectangle.x==800 && this.keySpace.isDown){
             this.scene.start('Credits');
-        }else if(this.backRectangle.x==1200 && this.keyEnter.isDown){
+        }else if(this.backRectangle.x==1200 && this.keySpace.isDown){
 
         }
     }
