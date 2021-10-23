@@ -3,12 +3,15 @@ export default class Mainmenu extends Phaser.Scene{
         super({key: 'Mainmenu'})
     }
 
+   constructor(){
+        super({key: 'Mainmenu'})
+    }
     init(){
         this.keySpace =  this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.cursors = this.input.keyboard.createCursorKeys();
         this.vez= 0;
     }
-    
+
     preload(){
         this.load.image('sky0', 'Assets/Fondo día.png');
         this.load.image('sky1', 'Assets/Fondo anochecer.png');
@@ -20,6 +23,8 @@ export default class Mainmenu extends Phaser.Scene{
         this.load.image('play', 'Assets/Botón Jugar.png');
         this.load.image('credits', 'Assets/Botón Creditos.png');
         this.load.image('out', 'Assets/Botón Salir.png');
+        this.load.image('front', 'Assets/Edificios foreground.png');
+        this.load.image('back', 'Assets/Edificios background.png');
 
         this.load.spritesheet('robotA', 'Assets/andar-sheet.png', { frameWidth: 40, frameHeight: 50 });
         this.load.spritesheet('robotB', 'Assets/andar-sheet1.png', { frameWidth: 40, frameHeight: 50 });
@@ -29,9 +34,6 @@ export default class Mainmenu extends Phaser.Scene{
         // Game background
         this.add.image(800, 500, 'sky0');
         
-        //  The platforms group contains the ground and the 2 ledges we can jump on
-        this.platforms = this.physics.add.staticGroup();
-        
         //This create the place where the clouds are going to be
         this.rect = new Phaser.Geom.Rectangle(0, 0, 1600, 1060);
         //Here we inicialite the group of clouds
@@ -39,11 +41,22 @@ export default class Mainmenu extends Phaser.Scene{
         //And this initialite the cloud in the exact are
         Phaser.Actions.RandomRectangle(this.group.getChildren(), this.rect);
 
+        //Here we create the efect of movement of the backgournd
+        this.back = this.add.tileSprite(0, 0, 1600, 1060, 'back')
+        .setOrigin(0, 0);
+        this.floor = this.add.rectangle(800,1000,1600,400,0x555555);
+        this.front = this.add.tileSprite(0, -50, 1600, 1060, 'front')
+        .setOrigin(0, 0);
+
+        //  The platforms group contains the ground and the 2 ledges we can jump on
+        this.platforms = this.physics.add.staticGroup();
+
         this.title = this.add.image(800,-200, "title").setScale(0.75);
 
         //  Here we create the ground.
         //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-        this.platforms.create(600, 1000, 'ground').setScale(3).refreshBody();
+        this.platforms.create(600, 1040, 'ground').setScale(3).refreshBody();
+        this.platforms.create(600, 1000, 'ground').setScale(3);
 
         //Configuratión of the animation
         const animConfig = {
@@ -68,10 +81,14 @@ export default class Mainmenu extends Phaser.Scene{
         sprite.play('walk');
         sprite1.play('walk1');
 
+        sprite.flipX=true;
+        sprite1.flipX=true;
+
         this.backRectangle = this.add.rectangle(-100,-100,250,200,0x000000);
         this.play=this.add.image(-100,-100,'play').setScale(0.25);
         this.credits=this.add.image(-100,-100,'credits').setScale(0.25);
         this.out=this.add.image(-100,-100,'out').setScale(0.25);
+        this.instruciones = this.add.text(-100, -100, '<--  -->', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
     }
 
     update(){
@@ -81,10 +98,14 @@ export default class Mainmenu extends Phaser.Scene{
         Phaser.Actions.IncXY(this.children, 1, 1);
         Phaser.Actions.WrapInRectangle(this.children, this.rect);
 
+        this.back.tilePositionX -= 2;
+        this.front.tilePositionX -= 6;
+
         if(this.title.y < 400){
             this.title.y=this.title.y + 3;
         }else if(this.vez==0){
             this.backRectangle.x=400; this.backRectangle.y=650;
+            this.instruciones.x=375; this.instruciones.y=725;
             this.play.x=400; this.play.y=650;
             this.credits.x=800; this.credits.y=650;
             this.out.x=1200; this.out.y=650;
@@ -93,9 +114,11 @@ export default class Mainmenu extends Phaser.Scene{
 
         if (this.cursors.left.isDown && this.backRectangle.x>400){
             this.backRectangle.x-=400; 
+            this.instruciones.x-=400;
         }
         if (this.cursors.right.isDown && this.backRectangle.x<1200){
             this.backRectangle.x+=400;
+            this.instruciones.x+=400;
         }
 
         if(this.backRectangle.x==400 && this.keySpace.isDown){
