@@ -26,34 +26,62 @@ export default class Game extends Phaser.Scene{
     preload(){
         this.load.spritesheet('robot1', 'Assets/andar-sheet1.png', { frameWidth: 40, frameHeight: 50 });
         this.load.spritesheet('robot2', 'Assets/andar-sheet.png', { frameWidth: 40, frameHeight: 50 });
+        this.load.spritesheet('plantani', 'Assets/Planta-sheet.png', { frameWidth: 60, frameHeight: 120 });
+        this.load.spritesheet('employee', 'Assets/trabajador-sheet.png', { frameWidth: 56, frameHeight: 64 });
+        this.load.spritesheet('printerAnim', 'Assets/Impresora-sheet.png', { frameWidth: 140, frameHeight: 100 });
+        this.load.spritesheet('bookshelfAnim', 'Assets/Librería-sheet.png', { frameWidth: 120, frameHeight: 120 });
         this.load.image('stop1', 'Assets/player1.png');
         this.load.image('stop2', 'Assets/player2.png');
         this.load.image('building', 'Assets/Edificio.png');
         this.load.image('sky', 'Assets/Fondo día.png');
+        this.load.image('wall2', 'Assets/Pared P2.png');
+        this.load.image('wall1', 'Assets/Pared P1.png');
+        this.load.image('wall0', 'Assets/Pared P0.png');
         this.load.image('interaction', 'Assets/Botón interacción E.png');
+        this.load.image('platform2C', 'Assets/Plataforma Central P2.png');
+        this.load.image('platform2L', 'Assets/Plataforma Lateral P2.png');
         this.load.image('platform1C', 'Assets/Plataforma Central P1.png');
         this.load.image('platform1L', 'Assets/Plataforma Lateral P1.png');
         this.load.image('platform0', 'Assets/Plataforma P0.png');
-        this.load.image('wall1', 'Assets/Pared P1.png');
-        this.load.image('wall0', 'Assets/Pared P0.png');
+        this.load.image('separator1', 'Assets/Separador P0.png');
+        this.load.image('separator2', 'Assets/Separador P1.png');
+        this.load.image('ceiling', 'Assets/Techo.png');
         this.load.image('plant', 'Assets/Planta.png');
-        this.load.spritesheet('plantani', 'Assets/Planta-sheet.png', { frameWidth: 60, frameHeight: 120 });
+        this.load.image('cloud', 'Assets/nube.png');
+        this.load.image('sky0', 'Assets/Fondo día.png');
+        this.load.image('paint', 'Assets/Cuadro.png');
+        this.load.image('printer', 'Assets/Impresora.png');
+        this.load.image('bookshelf', 'Assets/Librería.png');
     }
     create(){
+        this.add.image(543, 405, 'sky0').setScale(0.7);
+        this.rect = new Phaser.Geom.Rectangle(0, 0, 1086, 720);
+        this.group = this.add.group({ key: 'cloud', frameQuantity: 15 });
+        Phaser.Actions.RandomRectangle(this.group.getChildren(), this.rect);
+        
         this.platforms = this.physics.add.staticGroup();
         this.wallpaper = this.physics.add.staticImage(543, 405, 'building').setScale(0.68);
-        /*this.platforms.create(651, 545, 'platform1C').setScale(0.83).refreshBody();
+        this.platforms.create(540, 100, 'ceiling').setScale(0.7).refreshBody();
+        this.platforms.create(509, 180, 'separator1').setScale(0.7).refreshBody();
+        this.platforms.create(512, 387, 'separator2').setScale(0.7).refreshBody();
+        this.platforms.create(700, 341, 'platform2C').setScale(0.83).refreshBody();
+        this.platforms.create(35, 341, 'platform2L').setScale(0.83).refreshBody();
+        this.platforms.create(5, 245, 'wall1').setScale(0.7).refreshBody();
+        this.platforms.create(1077, 247, 'wall1').setScale(0.70).refreshBody();
+        this.platforms.create(47, 445, 'wall1').setScale(0.63).refreshBody();
+        this.platforms.create(1067, 445, 'wall1').setScale(0.63).refreshBody();
+        this.platforms.create(651, 545, 'platform1C').setScale(0.83).refreshBody();
         this.platforms.create(88, 545, 'platform1L').setScale(0.83).refreshBody();
         this.platforms.create(141, 635, 'wall0').setScale(2.74).refreshBody();
         this.platforms.create(1000, 635, 'wall0').setScale(2.74).refreshBody();
-        this.platforms.create(47, 445, 'wall1').setScale(0.63).refreshBody();
-        this.platforms.create(1067, 445, 'wall1').setScale(0.63).refreshBody();
-        this.platforms.create(651, 715, 'platform0').setScale(0.83).refreshBody();*/
+        this.platforms.create(651, 715, 'platform0').setScale(0.83).refreshBody();
+        this.paint= this.add.image(579,230,'paint');
+        this.employee= this.physics.add.staticSprite(570, 655, 'employee', 'frame_0000');
+        this.averias.push(this.averiaplanta1= new Averías(this, 300, 600,'plantani', 'plant', 0, 4).setScale(0.5));
+        this.averias.push(this.averiaplanta2= new Averías(this,520,298,'printerAnim', 'printer', 0, 8).setScale(0.67).refreshBody());
+        this.averias.push(this.averiaplanta3= new Averías(this,550,400,'bookshelfAnim', 'bookshelf', 0, 4).setScale(0.67).refreshBody());
         this.player1 = new Player(this, 300, 1000, 'robot1', 'stop1');
         this.player2 = new Player(this, 500, 1000, 'robot2', 'stop2');
-        this.averias.push(this.averiaplanta1= new Averías(this, 750, 500,'plantani', 'plant', 0, 4).setScale(0.5));
-        this.averias.push(this.averiaplanta2= new Averías(this,200,1000,'robot1', 'stop1', 0, 2).setScale(0.67).refreshBody());
-        //this.averias.push(this.averiaplanta3= new Averías(this,800,1000,'robot1', 'stop1', 0, 2).setScale(0.67).refreshBody());
         this.button1 = this.physics.add.staticImage(0, 0, 'interaction').setScale(0.5).setVisible(false).setScale(0.67);
         this.physics.add.collider(this.player1, this.player2, function onEvent(player1, player2){
             if(player2.x>player1.x){
@@ -83,7 +111,7 @@ export default class Game extends Phaser.Scene{
             this.averias[this.posi].setPushable(false);
             this.averias2.push(this.averias[this.posi]);
             this.averias.splice(this.averias[this.posi], 1);
-            this.error+=50000000;     
+            this.error+=5000;     
     }
         if (this.keyA.isDown)
     {
