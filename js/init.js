@@ -3,10 +3,10 @@ import Mainmenu from './Scenes/Mainmenu.js';
 import Credits from './Scenes/Credits.js';
 
 const config = {
-    width: 1600,
-    height: 1060,
+    width: 1086,
+    height: 720,
     type:Phaser.AUTO,
-    scene: [Game, Mainmenu, Credits],
+    scene: [Game, Credits, Mainmenu],
     physics: {
         default: 'arcade',
         arcade: {
