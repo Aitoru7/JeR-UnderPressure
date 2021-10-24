@@ -2,10 +2,6 @@ export default class Mainmenu extends Phaser.Scene{
     constructor(){
         super({key: 'Mainmenu'})
     }
-
-   constructor(){
-        super({key: 'Mainmenu'})
-    }
     init(){
         this.keySpace =  this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -22,7 +18,6 @@ export default class Mainmenu extends Phaser.Scene{
         this.load.image('title', 'Assets/Titulo.png');
         this.load.image('play', 'Assets/Botón Jugar.png');
         this.load.image('credits', 'Assets/Botón Creditos.png');
-        this.load.image('out', 'Assets/Botón Salir.png');
         this.load.image('front', 'Assets/Edificios foreground.png');
         this.load.image('back', 'Assets/Edificios background.png');
 
@@ -87,7 +82,6 @@ export default class Mainmenu extends Phaser.Scene{
         this.backRectangle = this.add.rectangle(-100,-100,250,200,0x000000);
         this.play=this.add.image(-100,-100,'play').setScale(0.25);
         this.credits=this.add.image(-100,-100,'credits').setScale(0.25);
-        this.out=this.add.image(-100,-100,'out').setScale(0.25);
         this.instruciones = this.add.text(-100, -100, '<--  -->', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
     }
 
@@ -104,29 +98,26 @@ export default class Mainmenu extends Phaser.Scene{
         if(this.title.y < 400){
             this.title.y=this.title.y + 3;
         }else if(this.vez==0){
-            this.backRectangle.x=400; this.backRectangle.y=650;
-            this.instruciones.x=375; this.instruciones.y=725;
-            this.play.x=400; this.play.y=650;
-            this.credits.x=800; this.credits.y=650;
-            this.out.x=1200; this.out.y=650;
+            this.backRectangle.x=600; this.backRectangle.y=650;
+            this.instruciones.x=575; this.instruciones.y=725;
+            this.play.x=600; this.play.y=650;
+            this.credits.x=1000; this.credits.y=650;
             this.vez++;
         }
 
-        if (this.cursors.left.isDown && this.backRectangle.x>400){
-            this.backRectangle.x-=400; 
-            this.instruciones.x-=400;
+        if (this.cursors.left.isDown){
+            this.backRectangle.x=600; 
+            this.instruciones.x=575;
         }
-        if (this.cursors.right.isDown && this.backRectangle.x<1200){
-            this.backRectangle.x+=400;
-            this.instruciones.x+=400;
+        if (this.cursors.right.isDown ){
+            this.backRectangle.x=1000;
+            this.instruciones.x=975;
         }
 
-        if(this.backRectangle.x==400 && this.keySpace.isDown){
+        if(this.backRectangle.x==600 && this.keySpace.isDown){
             this.scene.start('Game');
-        }else if(this.backRectangle.x==800 && this.keySpace.isDown){
+        }else if(this.backRectangle.x==1000 && this.keySpace.isDown){
             this.scene.start('Credits');
-        }else if(this.backRectangle.x==1200 && this.keySpace.isDown){
-
         }
     }
 }
