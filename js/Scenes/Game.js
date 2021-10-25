@@ -28,11 +28,11 @@ export default class Game extends Phaser.Scene{
         this.error=5000;
         averias = [];
         averias2= [];
+        player1;
+        player2;
         this.posi = Math.round(Math.random() * (averias.length - 0) + 0);
         timer = this.time.addEvent({callback: () => {player2.setAcceleration(0), player1.setAcceleration(0)}, delay: 1000, callbackScope: this, loop: true}); 
         timer2 = this.time.addEvent({callback: () => {keyE.enabled=true, keyW.enabled=true, keyA.enabled=true, keyS.enabled=true, keyD.enabled=true}, delay: Math.round(Math.random() * (7000 - 3000) + 3000), callbackScope: this, loop: true});  
-        player1;
-        player2;
         this.wallpaper;
         this.cursors = this.input.keyboard.createCursorKeys();
         keyW =  this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
@@ -95,13 +95,13 @@ export default class Game extends Phaser.Scene{
         this.platforms.create(651, 715, 'platform0').setScale(0.83).refreshBody();
         this.paint= this.add.image(579,230,'paint');
         this.employee= this.physics.add.staticSprite(570, 655, 'employee', 'frame_0000');
-        this.averias.push(this.averiaplanta1= new Averías(this, 300, 600,'plantani', 'plant', 0, 4).setScale(0.5));
-        this.averias.push(this.averiaplanta2= new Averías(this,520,298,'printerAnim', 'printer', 0, 8).setScale(0.67).refreshBody());
-        this.averias.push(this.averiaplanta3= new Averías(this,550,400,'bookshelfAnim', 'bookshelf', 0, 4).setScale(0.67).refreshBody());
-        this.player1 = new Player(this, 300, 1000, 'robot1', 'stop1');
-        this.player2 = new Player(this, 500, 1000, 'robot2', 'stop2');
+        averias.push(this.averiaplanta1= new Averías(this, 300, 600,'plantani', 'plant', 0, 4).setScale(0.5));
+        averias.push(this.averiaplanta2= new Averías(this,520,298,'printerAnim', 'printer', 0, 8).setScale(0.67).refreshBody());
+        averias.push(this.averiaplanta3= new Averías(this,550,400,'bookshelfAnim', 'bookshelf', 0, 4).setScale(0.67).refreshBody());
+        player1 = new Player(this, 300, 1000, 'robot1', 'stop1');
+        player2 = new Player(this, 500, 1000, 'robot2', 'stop2');
         this.button1 = this.physics.add.staticImage(0, 0, 'interaction').setScale(0.5).setVisible(false).setScale(0.67);
-        this.physics.add.collider(this.player1, this.player2, function onEvent(player1, player2){
+        this.physics.add.collider(player1, player2, function onEvent(player1, player2){
             if(player2.x>player1.x){
                 player2.setAccelerationX(50000);
                 player1.setAccelerationX(-50000);
@@ -111,10 +111,10 @@ export default class Game extends Phaser.Scene{
             }
             timer;  
         });
-        this.physics.add.collider(this.player1, this.platforms);
-        this.physics.add.collider(this.player2, this.platforms);
-        for(let i=0; i<this.averias.length; i++){
-            this.physics.add.collider(this.platforms, this.averias[i]);
+        this.physics.add.collider(player1, this.platforms);
+        this.physics.add.collider(player2, this.platforms);
+        for(let i=0; i<averias.length; i++){
+            this.physics.add.collider(this.platforms, averias[i]);
         }
         
     }
@@ -131,53 +131,53 @@ export default class Game extends Phaser.Scene{
             console.log(averias2);
             this.error+=20000;     
         }
-        if (this.keyA.isDown)
+        if (keyA.isDown)
     {
-        this.player1.flipX = true;
-        this.player1.setVelocityX(-400);
+        player1.flipX = true;
+        player1.setVelocityX(-400);
 
-        this.player1.anims.play(this.player1.key[0], true);
+        player1.anims.play(player1.key[0], true);
     }
-    else if (this.keyD.isDown)
+    else if (keyD.isDown)
     {
-        this.player1.flipX = false;
-        this.player1.setVelocityX(400);
+        player1.flipX = false;
+        player1.setVelocityX(400);
 
-        this.player1.anims.play(this.player1.key[0], true);
+        player1.anims.play(player1.key[0], true);
     }
     else
     {
-        this.player1.setVelocityX(0);
-        this.player1.anims.play(this.player1.key[1]);
+        player1.setVelocityX(0);
+        player1.anims.play(player1.key[1]);
     }
-    if (this.keyW.isDown && this.player1.body.touching.down)
+    if (keyW.isDown && player1.body.touching.down)
     {
-        this.player1.setVelocityY(-500);
+        player1.setVelocityY(-500);
     }
 
 
     if (this.cursors.left.isDown)
     {
-        this.player2.flipX = true;
-        this.player2.setVelocityX(-400);
+        player2.flipX = true;
+        player2.setVelocityX(-400);
 
-        this.player2.anims.play(this.player2.key[0], true);
+        player2.anims.play(player2.key[0], true);
     }
     else if (this.cursors.right.isDown)
     {
-        this.player2.flipX = false;
-        this.player2.setVelocityX(400)
+        player2.flipX = false;
+        player2.setVelocityX(400)
 
-        this.player2.anims.play(this.player2.key[0], true);
+        player2.anims.play(player2.key[0], true);
     }
     else
     {
-        this.player2.setVelocityX(0);
-        this.player2.anims.play(this.player2.key[1]);
+        player2.setVelocityX(0);
+        player2.anims.play(player2.key[1]);
     }
-    if (this.cursors.up.isDown && this.player2.body.touching.down)
+    if (this.cursors.up.isDown && player2.body.touching.down)
     {
-        this.player2.setVelocityY(-500);
+        player2.setVelocityY(-500);
     }
     for(let i=0; i<averias2.length; i++){
             if((player1.x < averias2[i].x+70) && (player1.x > averias2[i].x-70) && (player1.y > averias2[i].y-70) && (player1.y < averias2[i].y+10)){
