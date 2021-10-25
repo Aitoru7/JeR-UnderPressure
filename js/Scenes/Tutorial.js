@@ -21,28 +21,29 @@ export default class Tutorial extends Phaser.Scene{
     }
 
     create(){
-        this.border = this.add.rectangle(450,350,800,600,0xffffff);
-        this.content = this.add.rectangle(452,352,750,550,0x000000);
+        this.border = this.add.rectangle(550,350,800,600,0xffffff);
+        this.content = this.add.rectangle(552,352,750,550,0x000000);
         this.style = { font: "25px Arial", fill: "#FFFFFF" };
-        this.controls = this.add.text(100, 100, 'Controles:', this.style);
-        this.add.image(300, 200, 'blue');
-        this.add.image(600, 200, 'red');
-        this.add.image(300, 270, 'w');
-        this.add.image(245, 320, 'a');
-        this.add.image(355, 320, 'd');
-        this.add.image(600, 270, 'up');
-        this.add.image(545, 320, 'left');
-        this.add.image(655, 320, 'right');
+        this.controls = this.add.text(200, 100, 'Controles:', this.style);
+        this.add.image(400, 200, 'blue');
+        this.add.image(700, 200, 'red');
+        this.add.image(400, 270, 'w');
+        this.add.image(345, 320, 'a');
+        this.add.image(455, 320, 'd');
+        this.add.image(700, 270, 'up');
+        this.add.image(645, 320, 'left');
+        this.add.image(755, 320, 'right');
         this.style1 = { font: "15px Arial", fill: "#FFFFFF" };
-        this.instruciones = this.add.text(100, 600, 'Para salir pulsa la barra espaciadora', this.style1);
-        this.averias= this.add.text(100, 400, 'Interactuar con averia y tareas: ', this.style);
-        this.add.image(300, 500, 'e');
-        this.add.image(600, 500, '.');
+        this.instruciones = this.add.text(200, 600, 'Para salir pulsa la barra espaciadora', this.style1);
+        this.averias= this.add.text(200, 400, 'Interactuar con averia y tareas: ', this.style);
+        this.add.image(400, 500, 'e');
+        this.add.image(700, 500, '.');
     }
 
     update(){
         if(this.keySpace.isDown){
             this.scene.stop('Tutorial');
+            this.scene.resume('Game');
         }
     }
 
