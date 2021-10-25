@@ -12,15 +12,13 @@ export default class Averías extends Phaser.Physics.Arcade.Sprite {
 
         this.init();
         this.animateFault();
-        //this.interaction(this.player);
-    
     }
 
     init(){
+        this.setPushable(false);
         this.setCollideWorldBounds(true)
         this.setGravityY(300)
         this.key=['na','a']
-        this.a=false;
     }
 
     animateFault(){
@@ -37,8 +35,4 @@ export default class Averías extends Phaser.Physics.Arcade.Sprite {
             frameRate: 20
         });
     }
-
-   /* intetraction(player){
-    }*/
-    
 }
