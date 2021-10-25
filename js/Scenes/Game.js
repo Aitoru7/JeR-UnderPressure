@@ -140,6 +140,7 @@ export default class Game extends Phaser.Scene{
             this.scene.start('GameOver');
         }*/
         if(this.vez==0){
+            this.scene.pause('Game');
             this.scene.launch('Tutorial');
             this.vez++;
         }
