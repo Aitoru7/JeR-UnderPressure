@@ -19,6 +19,7 @@ export default class Game extends Phaser.Scene{
         super({key: 'Game'})
     } 
     init(){
+        this.vez=0;
         //combo = this.input.keyboard.createCombo();
         control = false;
         x = 99999999999;
@@ -119,6 +120,10 @@ export default class Game extends Phaser.Scene{
         
     }
     update(time, delta){
+        if(this.vez==0){
+            this.scene.launch('Tutorial');
+            this.vez++;
+        }
     this.button1.setVisible(false); 
     if(time > this.error){
             Math.round(Math.random() * (averias.length - 0) + 0);
