@@ -7,13 +7,13 @@ var keyA;
 var keyS;
 var keyD;
 var keyE;
-var x;
-var control;
-var combo;
 var player1;
 var player2;
 var averias2;
 var averias;
+var timep1;
+var timep2;
+var control;
 export default class Game extends Phaser.Scene{
     constructor(){
         super({key: 'Game'})
@@ -22,7 +22,8 @@ export default class Game extends Phaser.Scene{
         this.vez=0;
         //combo = this.input.keyboard.createCombo();
         control = false;
-        x = 99999999999;
+        timep1 = 20000;
+        timep2 = 20000;
         this.f=3000;
         this.button1;
         this.platforms;
@@ -31,16 +32,16 @@ export default class Game extends Phaser.Scene{
         averias2= [];
         player1;
         player2;
-        this.posi = Math.round(Math.random() * (averias.length - 0) + 0);
+        this.posi = 0;//Math.round(Math.random() * (averias.length - 0) + 0);
         timer = this.time.addEvent({callback: () => {player2.setAcceleration(0), player1.setAcceleration(0)}, delay: 1000, callbackScope: this, loop: true}); 
-        timer2 = this.time.addEvent({callback: () => {keyE.enabled=true, keyW.enabled=true, keyA.enabled=true, keyS.enabled=true, keyD.enabled=true}, delay: Math.round(Math.random() * (7000 - 3000) + 3000), callbackScope: this, loop: true});  
+        timer2 = this.time.addEvent({callback: () => {keyE.enabled=true, keyW.enabled=true, keyA.enabled=true, keyS.enabled=true, keyD.enabled=true}, delay: Math.round(Math.random() * (8500 - 3000) + 3000), callbackScope: this, loop: true});  
         this.wallpaper;
         this.cursors = this.input.keyboard.createCursorKeys();
         keyW =  this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         keyS =  this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         keyD =  this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-        keyE =  this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+        keyE =  this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E, true, true);
     }
     preload(){
         this.load.spritesheet('robot1', 'Assets/andar-sheet1.png', { frameWidth: 40, frameHeight: 50 });
@@ -81,12 +82,12 @@ export default class Game extends Phaser.Scene{
         this.platforms = this.physics.add.staticGroup();
         this.wallpaper = this.physics.add.staticImage(543, 405, 'building').setScale(0.68);
         this.platforms.create(540, 100, 'ceiling').setScale(0.7).refreshBody();
-        this.platforms.create(509, 180, 'separator1').setScale(0.7).refreshBody();
+        this.platforms.create(509, 185, 'separator1').setScale(0.7).refreshBody();
         this.platforms.create(512, 387, 'separator2').setScale(0.7).refreshBody();
-        this.platforms.create(700, 341, 'platform2C').setScale(0.83).refreshBody();
+        this.platforms.create(850, 341, 'platform2C').setScale(0.83).refreshBody();
         this.platforms.create(35, 341, 'platform2L').setScale(0.83).refreshBody();
         this.platforms.create(5, 245, 'wall1').setScale(0.7).refreshBody();
-        this.platforms.create(1077, 247, 'wall1').setScale(0.70).refreshBody();
+        this.platforms.create(1077, 247, 'wall1').setScale(0.85).refreshBody();
         this.platforms.create(47, 445, 'wall1').setScale(0.63).refreshBody();
         this.platforms.create(1067, 445, 'wall1').setScale(0.63).refreshBody();
         this.platforms.create(651, 545, 'platform1C').setScale(0.83).refreshBody();
@@ -95,7 +96,7 @@ export default class Game extends Phaser.Scene{
         this.platforms.create(1000, 635, 'wall0').setScale(2.74).refreshBody();
         this.platforms.create(651, 715, 'platform0').setScale(0.83).refreshBody();
         this.paint= this.add.image(579,230,'paint');
-        this.employee= this.physics.add.staticSprite(570, 655, 'employee', 'frame_0000');
+        this.employee= this.physics.add.staticSprite(585, 655, 'employee', 'frame_0000');
         averias.push(this.averiaplanta1= new Averías(this, 300, 600,'plantani', 'plant', 0, 4).setScale(0.5));
         averias.push(this.averiaplanta2= new Averías(this,520,298,'printerAnim', 'printer', 0, 8).setScale(0.67).refreshBody());
         averias.push(this.averiaplanta3= new Averías(this,550,400,'bookshelfAnim', 'bookshelf', 0, 4).setScale(0.67).refreshBody());
@@ -117,9 +118,22 @@ export default class Game extends Phaser.Scene{
         for(let i=0; i<averias.length; i++){
             this.physics.add.collider(this.platforms, averias[i]);
         }
+        for(let i=0; i<averias.length; i++){
+            this.physics.add.collider(this.platforms, averias2[i]);
+        }
+        
         
     }
     update(time, delta){
+        /*if (time > timep1){
+            this.scene.start('GameOver');
+        }
+        if(time > timep2){
+            this.scene.start('GameOver');
+        }
+        if(averias.length == 0 && time > error){
+            this.scene.start('GameOver');
+        }*/
         if(this.vez==0){
             this.scene.launch('Tutorial');
             this.vez++;
@@ -143,6 +157,7 @@ export default class Game extends Phaser.Scene{
 
         player1.anims.play(player1.key[0], true);
     }
+
     else if (keyD.isDown)
     {
         player1.flipX = false;
@@ -159,7 +174,6 @@ export default class Game extends Phaser.Scene{
     {
         player1.setVelocityY(-500);
     }
-
 
     if (this.cursors.left.isDown)
     {
@@ -185,18 +199,23 @@ export default class Game extends Phaser.Scene{
         player2.setVelocityY(-500);
     }
     for(let i=0; i<averias2.length; i++){
-            if((player1.x < averias2[i].x+70) && (player1.x > averias2[i].x-70) && (player1.y > averias2[i].y-70) && (player1.y < averias2[i].y+10)){
+            if((player1.x < averias2[i].x+85) && (player1.x > averias2[i].x-85) && (player1.y > averias2[i].y-85) && (player1.y < averias2[i].y+10)){
             this.button1.x=player1.x;
             this.button1.y=player1.y - 50;
             this.button1.setVisible(true);
+            var rep=0;
             keyE.on('down', function(){
+                rep++;
+                console.log("a");
                 keyW.enabled=false;
                 keyA.enabled=false;
                 keyS.enabled=false;
                 keyD.enabled=false;
                 keyE.enabled=false;
                 timer2;
-                if(averias2[i]!=undefined){
+                if(averias2[i]!=undefined && rep==1){
+                    console.log(rep);
+                   console.log(averias2[i].sprite);
                     averias.push(averias2[i]);
                     averias2.splice(averias2[i], 1);  
                 }
