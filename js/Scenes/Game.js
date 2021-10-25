@@ -125,6 +125,11 @@ export default class Game extends Phaser.Scene{
         
     }
     update(time, delta){
+        //Part of the update for the clouds
+        this.children = this.group.getChildren();
+
+        Phaser.Actions.IncXY(this.children, 1, 1);
+        Phaser.Actions.WrapInRectangle(this.children, this.rect);
         /*if (time > timep1){
             this.scene.start('GameOver');
         }
