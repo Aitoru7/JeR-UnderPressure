@@ -22,7 +22,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     animatePlayer() {
         this.anims.create({
             key: this.key[0],
-            frames: this.anims.generateFrameNumbers(this.sprite, { start: 0, end: 3 }),
+            frames: this.anims.generateFrameNumbers(this.sprite, { start: 0, end: 7 }),
             frameRate: 10,
             repeat: -1
 
@@ -30,9 +30,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
         this.anims.create({
             key: this.key[1],
-            frames: [{ key: this.sprite2, frame: 4 }],
+            frames: [ { key: this.sprite2, frame: 0 } ],
             frameRate: 20,
-
         });
     }
 }
