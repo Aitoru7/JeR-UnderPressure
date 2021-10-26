@@ -11,6 +11,8 @@ var keyPeriod;
 var player1;
 var player2;
 var averias;
+var missions1;
+var missions2;
 var timep1;
 var timep2;
 var button1;
@@ -31,6 +33,8 @@ export default class Game extends Phaser.Scene{
         this.platforms;
         this.error=5000;
         averias = [];
+        missions1=[];
+        missions2=[];
         player1;
         player2;
         this.posi = 0;//Math.round(Math.random() * (averias.length - 0) + 0);
@@ -75,6 +79,8 @@ export default class Game extends Phaser.Scene{
         this.load.image('paint', 'Assets/Cuadro.png');
         this.load.image('printer', 'Assets/Impresora.png');
         this.load.image('bookshelf', 'Assets/Librería.png');
+        this.load.image('missionj1', 'Assets/Flecha J1.png');
+        this.load.image('missionj2', 'Assets/Flecha J2.png');
     }
     create(){
         this.add.image(543, 405, 'sky0').setScale(0.7);
@@ -104,6 +110,16 @@ export default class Game extends Phaser.Scene{
         new Employer(this, 380, 463, 'employee').anims.play('l', true);
         new Employer(this, 820, 245, 'employee').anims.play('l', true);
         new Employer(this, 300, 245, 'employee').anims.play('l', true);
+        missions2.push(this.a = this.add.image(585,607, 'missionj2'));
+        missions2.push(this.b = this.add.image(755,413, 'missionj2'));
+        missions2.push(this.c =this.add.image(380,413, 'missionj2'));
+        missions2.push(this.d =this.add.image(820,195, 'missionj2'));
+        missions2.push(this.e =this.add.image(300,195, 'missionj2'));
+        missions1.push(this.f =this.add.image(585,607, 'missionj1'));
+        missions1.push(this.g =this.add.image(755,413, 'missionj1'));
+        missions1.push(this.h =this.add.image(380,413, 'missionj1'));
+        missions1.push(this.i =this.add.image(820,195, 'missionj1'));
+        missions1.push(this.j =this.add.image(300,195, 'missionj1'));
         averias.push(this.averiaplanta1= new Averías(this, 400, 600,'plantani', 'plant', 0, 4).setScale(0.5).refreshBody());
         averias.push(this.averiaplanta2= new Averías(this, 520, 298,'printerAnim', 'printer', 0, 8).setScale(0.67).refreshBody());
         averias.push(this.averiaplanta3= new Averías(this, 550, 400,'bookshelfAnim', 'bookshelf', 0, 4).setScale(0.67).refreshBody());
@@ -152,25 +168,65 @@ export default class Game extends Phaser.Scene{
                     console.log(averias[i].a, averias[i].sprite);
                 }
             }
+            for(let i=0; i<missions1.length; i++){  
+                if ((player1.x < missions1[i].x+85) && (player1.x > missions1[i].x-85) && (player1.y > missions1[i].y-85) && (player1.y < missions1[i].y+120) && (missions1[i].visible==true)){
+                    newpos=true;
+                    timep1 += 5000;
+                }
+            }
         });        
     }
     update(time, delta){
+        
         //console.log(time);
         button1.x=player1.x;
         button1.y=player1.y - 50;
         button1.setVisible(false); 
         button2.x=player2.x;
         button2.y=player2.y - 50;
-        button2.setVisible(false); 
-        /*if (time > timep1){
-            this.scene.start('GameOver');
+        button2.setVisible(false);
+
+        if(newpos){
+            for(let i=0; i<missions1.length; i++){
+                missions1[i].setVisible(false);
+            }
+            for(let i=0; i<missions2.length; i++){
+                missions2[i].setVisible(false);
+            }
+            do{
+                var a = Math.round(Phaser.Math.Between(0, missions1.length-1));
+                var b= Math.round(Phaser.Math.Between(0,missions2.length-1));
+            }while(a==b);
+            missions1[a].setVisible(true);
+            //missions1.slice(missions1[a],1);
+            missions2[b].setVisible(true);
+            //missions2.slice(missions1[b],1);
+            newpos=false;
+        }
+
+        for(let i=0; i<missions1.length; i++){
+            if ((player1.x < missions1[i].x+85) && (player1.x > missions1[i].x-85) && (player1.y > missions1[i].y-85) && (player1.y < missions1[i].y+120) && (missions1[i].visible==true)){
+                button1.x=player1.x;
+                button1.y=player1.y - 50;
+                button1.setVisible(true);
+            }  
+        }
+        
+        //Control of the clouds
+        this.children = this.group.getChildren();
+
+        Phaser.Actions.IncXY(this.children, 1, 1);
+        Phaser.Actions.WrapInRectangle(this.children, this.rect);
+        
+        if (time > timep1){
+            this.scene.start('Gamej2');
         }
         if(time > timep2){
-            this.scene.start('GameOver');
+            this.scene.start('Gamej1');
         }
         if(averias.length == 0 && time > error){
-            this.scene.start('GameOver');
-        }*/
+            this.scene.start('gameOver');
+        }
         
         if(time > this.error){
             do{
