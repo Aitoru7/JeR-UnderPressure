@@ -5,7 +5,6 @@ var timer;
 var timer2;
 var keyW;
 var keyA;
-var keyS;
 var keyD;
 var keyE;
 var player1;
