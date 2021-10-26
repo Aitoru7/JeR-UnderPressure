@@ -20,11 +20,14 @@ export default class Mainmenu extends Phaser.Scene{
         this.load.image('credits', 'Assets/Botón Creditos.png');
         this.load.image('front', 'Assets/Edificios foreground.png');
         this.load.image('back', 'Assets/Edificios background.png');
+        this.load.audio('pressure', 'Assets/Music/under pressure.mp3');
 
         this.load.spritesheet('robotA', 'Assets/andar-sheet.png', { frameWidth: 40, frameHeight: 50 });
         this.load.spritesheet('robotB', 'Assets/andar-sheet1.png', { frameWidth: 40, frameHeight: 50 });
     }
     create(){
+        this.song = this.sound.add('pressure');
+        this.song.play();
         //alert('porfavor funciona2');
         // Game background
         this.add.image(500, 400, 'sky0').setScale(0.8);
