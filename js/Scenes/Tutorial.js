@@ -33,7 +33,7 @@ export default class Tutorial extends Phaser.Scene{
         this.add.image(700, 270, 'up');
         this.add.image(645, 320, 'left');
         this.add.image(755, 320, 'right');
-        this.style1 = { font: "15px Arial", fill: "#FFFFFF" };
+        this.style1 = { font: "15px OCR A", fill: "#FFFFFF" };
         this.instruciones = this.add.text(200, 600, 'Para salir pulsa la barra espaciadora', this.style1);
         this.averias= this.add.text(200, 400, 'Interactuar con averia y tareas: ', this.style);
         this.add.image(400, 500, 'e');
