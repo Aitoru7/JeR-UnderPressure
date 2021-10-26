@@ -121,7 +121,7 @@ export default class Intro extends Phaser.Scene{
         Phaser.Actions.WrapInRectangle(this.children, this.rect);
 
         if(this.keySpace.isDown){
-            this.scene.start('Game');
+            this.scene.start('Tutorial');
         }
     }
 }
