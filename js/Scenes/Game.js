@@ -7,13 +7,16 @@ var keyW;
 var keyA;
 var keyD;
 var keyE;
+var keyPeriod;
 var player1;
 var player2;
 var averias;
 var timep1;
 var timep2;
 var button1;
+var button2;
 var collider;
+var cursors;
 export default class Game extends Phaser.Scene{
     constructor(){
         super({key: 'Game'})
@@ -24,20 +27,23 @@ export default class Game extends Phaser.Scene{
         timep1 = 20000;
         timep2 = 20000;
         button1;
+        button2;
         this.platforms;
-        this.error=25000;
+        this.error=5000;
         averias = [];
         player1;
         player2;
         this.posi = 0;//Math.round(Math.random() * (averias.length - 0) + 0);
         timer = this.time.addEvent({callback: () => {player2.setAcceleration(0), player1.setAcceleration(0)}, delay: 1000, callbackScope: this, loop: true}); 
-        timer2 = this.time.addEvent({callback: () => {keyW.enabled=true, keyA.enabled=true, keyD.enabled=true, button1.setVisible(false), player1.body.enable = true}, delay: Math.round(Math.random() * (8500 - 3000) + 3000), callbackScope: this, loop: true});          
+        timer2 = this.time.addEvent({callback: () => {keyW.enabled=true, keyA.enabled=true, keyD.enabled=true, button1.setVisible(false), player1.body.enable = true}, delay: Math.round(Math.random() * (8500 - 3000) + 3000), callbackScope: this, loop: true});    
+        timer2 = this.time.addEvent({callback: () => {cursors.enabled = true, button2.setVisible(false), player2.body.enable = true}, delay: Math.round(Math.random() * (8500 - 3000) + 3000), callbackScope: this, loop: true});                
         this.wallpaper;
-        this.cursors = this.input.keyboard.createCursorKeys();
+        cursors = this.input.keyboard.createCursorKeys();
         keyW =  this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         keyD =  this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyE =  this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+        keyPeriod = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.PERIOD);
     }
     preload(){
         this.load.spritesheet('robot1', 'Assets/andar-sheet1.png', { frameWidth: 40, frameHeight: 50 });
@@ -54,6 +60,7 @@ export default class Game extends Phaser.Scene{
         this.load.image('wall1', 'Assets/Pared P1.png');
         this.load.image('wall0', 'Assets/Pared P0.png');
         this.load.image('interaction', 'Assets/Botón interacción E.png');
+        this.load.image('interaction2', 'Assets/Botón interacción ..png' )
         this.load.image('platform2C', 'Assets/Plataforma Central P2.png');
         this.load.image('platform2L', 'Assets/Plataforma Lateral P2.png');
         this.load.image('platform1C', 'Assets/Plataforma Central P1.png');
@@ -103,6 +110,7 @@ export default class Game extends Phaser.Scene{
         player1 = new Player(this, 300, 1000, 'robot1', 'stop1');
         player2 = new Player(this, 500, 1000, 'robot2', 'stop2');
         button1 = this.physics.add.staticImage(0, 0, 'interaction').setScale(0.5).setVisible(false).setScale(0.67);
+        button2 = this.physics.add.staticImage(0, 0, 'interaction2').setScale(0.5).setVisible(false).setScale(0.67);
         this.physics.add.collider(player1, player2, function (player1, player2){
             if(player2.x>player1.x){
                 player2.setAccelerationX(50000);
@@ -119,6 +127,18 @@ export default class Game extends Phaser.Scene{
             this.physics.add.collider(this.platforms, averias[i]);
         }  
         this.physics.world
+        keyPeriod.on("down", function(){
+            for(let i=0; i<averias.length; i++){  
+                if ((player2.x < averias[i].x+85) && (player2.x > averias[i].x-85) && (player2.y > averias[i].y-85) && (player2.y < averias[i].y+20) && averias[i].a==true){
+                    cursors.enabled = false; 
+                    player2.body.enable = false;   
+                    averias[i].a = false;
+                    averias[i].body.enable = false;
+                    averias[i].anims.play(averias[i].key[1], true);
+                    console.log(averias[i].a, averias[i].sprite);
+                }
+            }
+        });
         keyE.on("down", function(){
             for(let i=0; i<averias.length; i++){  
                 if ((player1.x < averias[i].x+85) && (player1.x > averias[i].x-85) && (player1.y > averias[i].y-85) && (player1.y < averias[i].y+20) && averias[i].a==true){
@@ -138,6 +158,10 @@ export default class Game extends Phaser.Scene{
         //console.log(time);
         button1.x=player1.x;
         button1.y=player1.y - 50;
+        button1.setVisible(false); 
+        button2.x=player2.x;
+        button2.y=player2.y - 50;
+        button2.setVisible(false); 
         /*if (time > timep1){
             this.scene.start('GameOver');
         }
@@ -147,7 +171,7 @@ export default class Game extends Phaser.Scene{
         if(averias.length == 0 && time > error){
             this.scene.start('GameOver');
         }*/
-        button1.setVisible(false); 
+        
         if(time > this.error){
             do{
                 this.posi = Math.round(Math.random() * ((averias.length-1) - 0) + 0);
@@ -156,7 +180,7 @@ export default class Game extends Phaser.Scene{
             averias[this.posi].anims.play(averias[this.posi].key[0], true);
             averias[this.posi].body.enable = true;
             collider = this.physics.add.collider(averias[this.posi], player1, function no(){player1.velocityX = 0}, null, this);
-            collider = this.physics.add.collider(averias[this.posi], player2, function no(){player1.velocityX = 0}, null, this);
+            collider = this.physics.add.collider(averias[this.posi], player2, function no(){player2.velocityX = 0}, null, this);
             averias[this.posi].a = true;
             console.log(averias[this.posi].a);
             this.error+=25000;     
@@ -186,14 +210,14 @@ export default class Game extends Phaser.Scene{
             player1.setVelocityY(-500);
         }
 
-        if (this.cursors.left.isDown)
+        if (cursors.left.isDown)
         {
             player2.flipX = true;
             player2.setVelocityX(-400);
 
             player2.anims.play(player2.key[0], true);
         }
-        else if (this.cursors.right.isDown)
+        else if (cursors.right.isDown)
         {
             player2.flipX = false;
             player2.setVelocityX(400)
@@ -205,7 +229,7 @@ export default class Game extends Phaser.Scene{
             player2.setVelocityX(0);
             player2.anims.play(player2.key[1]);
         }
-        if (this.cursors.up.isDown && player2.body.touching.down)
+        if (cursors.up.isDown && player2.body.touching.down)
         {
             player2.setVelocityY(-500);
         }
@@ -214,6 +238,13 @@ export default class Game extends Phaser.Scene{
                 button1.x=player1.x;
                 button1.y=player1.y - 50;
                 button1.setVisible(true);
+            }
+        }
+        for(let i=0; i<averias.length; i++){
+            if ((player2.x < averias[i].x+85) && (player2.x > averias[i].x-85) && (player2.y > averias[i].y-85) && (player2.y < averias[i].y+20) && averias[i].a==true){
+                button2.x=player2.x;
+                button2.y=player2.y - 50;
+                button2.setVisible(true);
             }
         }
     }
