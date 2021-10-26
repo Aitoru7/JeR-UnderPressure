@@ -14,30 +14,29 @@ var averias;
 var timep1;
 var timep2;
 var button1;
+var collider;
 export default class Game extends Phaser.Scene{
     constructor(){
         super({key: 'Game'})
     } 
     init(){
-        this.vez=0;
+        collider;
         //combo = this.input.keyboard.createCombo();
         timep1 = 20000;
         timep2 = 20000;
-        this.f=3000;
         button1;
         this.platforms;
-        this.error=5000;
+        this.error=25000;
         averias = [];
         player1;
         player2;
         this.posi = 0;//Math.round(Math.random() * (averias.length - 0) + 0);
         timer = this.time.addEvent({callback: () => {player2.setAcceleration(0), player1.setAcceleration(0)}, delay: 1000, callbackScope: this, loop: true}); 
-        timer2 = this.time.addEvent({callback: () => {keyW.enabled=true, keyA.enabled=true, keyS.enabled=true, keyD.enabled=true, button1.setVisible(false)}, delay: Math.round(Math.random() * (8500 - 3000) + 3000), callbackScope: this, loop: true});  
+        timer2 = this.time.addEvent({callback: () => {keyW.enabled=true, keyA.enabled=true, keyD.enabled=true, button1.setVisible(false), player1.body.enable = true}, delay: Math.round(Math.random() * (8500 - 3000) + 3000), callbackScope: this, loop: true});          
         this.wallpaper;
         this.cursors = this.input.keyboard.createCursorKeys();
         keyW =  this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-        keyS =  this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         keyD =  this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyE =  this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
     }
@@ -120,15 +119,16 @@ export default class Game extends Phaser.Scene{
         for(let i=0; i<averias.length; i++){
             this.physics.add.collider(this.platforms, averias[i]);
         }  
+        this.physics.world
         keyE.on("down", function(){
             for(let i=0; i<averias.length; i++){  
                 if ((player1.x < averias[i].x+85) && (player1.x > averias[i].x-85) && (player1.y > averias[i].y-85) && (player1.y < averias[i].y+20) && averias[i].a==true){
                     keyW.enabled=false;
                     keyA.enabled=false;
-                    keyS.enabled=false;
-                    keyD.enabled=false;
-                    timer2;
+                    keyD.enabled=false; 
+                    player1.body.enable = false;   
                     averias[i].a = false;
+                    averias[i].body.enable = false;
                     averias[i].anims.play(averias[i].key[1], true);
                     console.log(averias[i].a, averias[i].sprite);
                 }
@@ -136,6 +136,7 @@ export default class Game extends Phaser.Scene{
         });        
     }
     update(time, delta){
+        //console.log(time);
         button1.x=player1.x;
         button1.y=player1.y - 50;
         /*if (time > timep1){
@@ -147,10 +148,6 @@ export default class Game extends Phaser.Scene{
         if(averias.length == 0 && time > error){
             this.scene.start('GameOver');
         }*/
-        if(this.vez==0){
-            this.scene.launch('Tutorial');
-            this.vez++;
-        }
         button1.setVisible(false); 
         if(time > this.error){
             do{
@@ -158,11 +155,12 @@ export default class Game extends Phaser.Scene{
                 console.log(averias[this.posi].a);
             }while(averias[this.posi].a != false);
             averias[this.posi].anims.play(averias[this.posi].key[0], true);
-            this.physics.add.collider(averias[this.posi], player1, function no(){player1.velocityX = 0;}, null, this);
-            this.physics.add.collider(averias[this.posi], player2, function no(){player2.velocityX = 0;}, null, this);
+            averias[this.posi].body.enable = true;
+            collider = this.physics.add.collider(averias[this.posi], player1, function no(){player1.velocityX = 0}, null, this);
+            collider = this.physics.add.collider(averias[this.posi], player2, function no(){player1.velocityX = 0}, null, this);
             averias[this.posi].a = true;
             console.log(averias[this.posi].a);
-            this.error+=10000;     
+            this.error+=25000;     
         }
         if (keyA.isDown)
         {
