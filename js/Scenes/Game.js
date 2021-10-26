@@ -39,7 +39,7 @@ export default class Game extends Phaser.Scene{
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         keyS =  this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         keyD =  this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-        keyE =  this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.PERIOD);
+        keyE =  this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
     }
     preload(){
         this.load.spritesheet('robot1', 'Assets/andar-sheet1.png', { frameWidth: 40, frameHeight: 50 });
@@ -136,12 +136,6 @@ export default class Game extends Phaser.Scene{
         });        
     }
     update(time, delta){
-        //Part of the update for the clouds
-        this.children = this.group.getChildren();
-
-        Phaser.Actions.IncXY(this.children, 1, 1);
-        Phaser.Actions.WrapInRectangle(this.children, this.rect);
-        
         button1.x=player1.x;
         button1.y=player1.y - 50;
         /*if (time > timep1){
