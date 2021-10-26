@@ -14,11 +14,11 @@ export default class Credits extends Phaser.Scene{
 
     create(){
         this.style = { font: "15px OCR A", fill: "#FFFFFF" };
-        this.instruciones = this.add.text(10, 10, 'Para salir pulsa la barra espaciadora', this.style);
+        this.add.text(10, 10, 'Para salir pulsa la barra espaciadora', this.style);
         this.style1 = { font: "30px OCR A", fill: "#FFFFFF" };
-        this.empiece = this.add.text(250, 150, 'Creadores, diseñadores y programadores: ', this.style1);
-        this.nosotros = this.add.text(300, 200, '-> Jesús Culebras González \n-> Aitor Lebrero Barroso \n-> Marcos Toledo Sanchez ', this.style1);
-
+        this.add.text(250, 100, 'Creadores, diseñadores y programadores: ', this.style1);
+        this.add.text(300, 150, '-> Jesús Culebras González \n-> Aitor Lebrero Barroso \n-> Marcos Toledo Sanchez ', this.style1);
+        this.add.text(25, 300, 'Creditos: \nCanción: Under Pressure 8 bits. Creadores: 8 bit Universe', this.style1)
         /*
         const animConfig = {
             key: 'animation',
