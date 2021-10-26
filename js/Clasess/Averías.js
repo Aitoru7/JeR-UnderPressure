@@ -16,9 +16,10 @@ export default class Averías extends Phaser.Physics.Arcade.Sprite {
 
     init(){
         this.setPushable(false);
-        this.setCollideWorldBounds(true)
-        this.setGravityY(300)
-        this.key=['na','a']
+        this.setCollideWorldBounds(true);
+        this.setGravityY(300);
+        this.a = false;
+        this.key=['na','a'];
     }
 
     animateFault(){
