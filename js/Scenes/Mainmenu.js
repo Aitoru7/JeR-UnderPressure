@@ -26,8 +26,10 @@ export default class Mainmenu extends Phaser.Scene{
         this.load.spritesheet('robotB', 'Assets/andar-sheet1.png', { frameWidth: 40, frameHeight: 50 });
     }
     create(){
-        this.song = this.sound.add('pressure');
-        this.song.play();
+        if (this.song == null){
+            this.song = this.sound.add('pressure');
+            this.song.play();
+        }
         //alert('porfavor funciona2');
         // Game background
         this.add.image(500, 400, 'sky0').setScale(0.8);
