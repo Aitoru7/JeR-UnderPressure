@@ -13,11 +13,11 @@ export default class Credits extends Phaser.Scene{
     }
 
     create(){
-        this.style = { font: "15px Arial", fill: "#FFFFFF" };
+        this.style = { font: "15px OCR A", fill: "#FFFFFF" };
         this.instruciones = this.add.text(10, 10, 'Para salir pulsa la barra espaciadora', this.style);
-        this.style1 = { font: "30px Arial", fill: "#FFFFFF" };
-        this.empiece = this.add.text(275, 150, 'Creadores, diseñadores y programadores: ', this.style1);
-        this.nosotros = this.add.text(325, 200, '-> Jesús Culebras González \n-> Aitor Lebrero Barroso \n-> Marcos Toledo Sanchez ', this.style1);
+        this.style1 = { font: "30px OCR A", fill: "#FFFFFF" };
+        this.empiece = this.add.text(250, 150, 'Creadores, diseñadores y programadores: ', this.style1);
+        this.nosotros = this.add.text(300, 200, '-> Jesús Culebras González \n-> Aitor Lebrero Barroso \n-> Marcos Toledo Sanchez ', this.style1);
 
         /*
         const animConfig = {
