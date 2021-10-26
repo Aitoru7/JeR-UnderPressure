@@ -19,6 +19,8 @@ var button1;
 var button2;
 var collider;
 var cursors;
+var text1;
+var text2;
 export default class Game extends Phaser.Scene{
     constructor(){
         super({key: 'Game'})
@@ -174,9 +176,14 @@ export default class Game extends Phaser.Scene{
                     timep1 += 5000;
                 }
             }
-        });        
+        });   
+        this.style = { font: "30px OCR A", fill: "#000000" };
+        text1=this.add.text(50, 100,this.style); 
+        text2=this.add.text(500, 100,this.style); 
     }
     update(time, delta){
+        text1.setText('Tiempo del J1: ' + Math.round(timep1- time));
+        text2.setText('Tiempo del J2: ' + Math.round(timep2- time));
         
         //console.log(time);
         button1.x=player1.x;
