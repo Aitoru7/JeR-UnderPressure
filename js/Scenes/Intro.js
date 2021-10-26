@@ -101,9 +101,9 @@ export default class Intro extends Phaser.Scene{
         this.add.rectangle(540,150,1000,225,0xffffff);
         this.add.rectangle(540,150,975,200,0x000000);
 
-        this.style = { font: "40px Arial", fill: "#FFFFFF" };
-        this.add.text(100, 100, 'Hoy comenzamos una nueva jornada de trabajo. \nA ver con que sorpresas nos encontramos :D', this.style);
-        this.style1 = { font: "15px Arial", fill: "#FFFFFF" };
+        this.style = { font: "35px OCR A", fill: "#FFFFFF" };
+        this.add.text(75, 100, 'Hoy comenzamos una nueva jornada de trabajo. \nA ver con que sorpresas nos encontramos :D', this.style);
+        this.style1 = { font: "15px OCR A", fill: "#FFFFFF" };
         this.add.text(100, 200, 'Para continuar pulsa la barra espaciadora', this.style1);
     }
 
