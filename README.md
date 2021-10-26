@@ -15,3 +15,6 @@ Marcos Toledo Sánchez, m.toledo.2019@alumnos.urjc.es, marcosto29
 
 ## Enlace al tablero de Trello:
 https://trello.com/b/Ua3ihzwg/juegos-en-red
+
+## Diagrama de flujo Under Pressure
+![Diagrama de Flujo](/Imagenes%20archivo%20README/1-%20GDD/3-%20Interfaz/Diagrama.png)
