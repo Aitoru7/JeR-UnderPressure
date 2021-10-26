@@ -84,7 +84,7 @@ export default class Game extends Phaser.Scene{
         this.platforms.create(540, 100, 'ceiling').setScale(0.7).refreshBody();
         this.platforms.create(509, 185, 'separator1').setScale(0.7).refreshBody();
         this.platforms.create(512, 387, 'separator2').setScale(0.7).refreshBody();
-        this.platforms.create(850, 341, 'platform2C').setScale(0.83).refreshBody();
+        this.platforms.create(700, 341, 'platform2C').setScale(0.83).refreshBody();
         this.platforms.create(35, 341, 'platform2L').setScale(0.83).refreshBody();
         this.platforms.create(5, 245, 'wall1').setScale(0.7).refreshBody();
         this.platforms.create(1077, 247, 'wall1').setScale(0.85).refreshBody();
