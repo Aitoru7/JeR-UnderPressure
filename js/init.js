@@ -3,12 +3,15 @@ import Mainmenu from './Scenes/Mainmenu.js';
 import Credits from './Scenes/Credits.js';
 import Tutorial from './Scenes/Tutorial.js';
 import Intro from './Scenes/Intro.js';
+import GameOver from './Scenes/GameOver.js';
+import Gamej1 from './Scenes/Gamej1.js';
+import Gamej2 from './Scenes/Gamej2.js';
 
 const config = {
     width: 1086,
     height: 720,
     type:Phaser.AUTO,
-    scene: [Mainmenu,Game, Credits, Tutorial, Intro ],
+    scene: [Mainmenu, Gamej2, Gamej1, GameOver, Intro,  Credits, Game,  Tutorial],
     physics: {
         default: 'arcade',
         arcade: {
@@ -18,4 +21,4 @@ const config = {
     },
 }
 
-const game = new Phaser.Game(config);
+const videogame = new Phaser.Game(config);
