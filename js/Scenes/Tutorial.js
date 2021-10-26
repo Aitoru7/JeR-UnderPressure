@@ -42,8 +42,7 @@ export default class Tutorial extends Phaser.Scene{
 
     update(){
         if(this.keySpace.isDown){
-            this.scene.stop('Tutorial');
-            this.scene.resume('Game');
+            this.scene.start('Game');
         }
     }
 
