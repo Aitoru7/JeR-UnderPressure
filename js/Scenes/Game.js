@@ -3,6 +3,7 @@ import Averías from "../Clasess/Averías.js";
 import Employer from "../Clasess/Employer.js";
 var timer;
 var timer2;
+var timer3;
 var keyW;
 var keyA;
 var keyD;
@@ -21,6 +22,7 @@ var collider;
 var cursors;
 var text1;
 var text2;
+var newpos;
 export default class Game extends Phaser.Scene{
     constructor(){
         super({key: 'Game'})
@@ -33,7 +35,7 @@ export default class Game extends Phaser.Scene{
         button1;
         button2;
         this.platforms;
-        this.error=5000;
+        this.error=25000;
         averias = [];
         missions1=[];
         missions2=[];
@@ -42,7 +44,7 @@ export default class Game extends Phaser.Scene{
         this.posi = 0;//Math.round(Math.random() * (averias.length - 0) + 0);
         timer = this.time.addEvent({callback: () => {player2.setAcceleration(0), player1.setAcceleration(0)}, delay: 1000, callbackScope: this, loop: true}); 
         timer2 = this.time.addEvent({callback: () => {keyW.enabled=true, keyA.enabled=true, keyD.enabled=true, button1.setVisible(false), player1.body.enable = true}, delay: Math.round(Math.random() * (8500 - 3000) + 3000), callbackScope: this, loop: true});    
-        timer2 = this.time.addEvent({callback: () => {cursors.enabled = true, button2.setVisible(false), player2.body.enable = true}, delay: Math.round(Math.random() * (8500 - 3000) + 3000), callbackScope: this, loop: true});                
+        timer3 = this.time.addEvent({callback: () => {cursors.enabled = true, button2.setVisible(false), player2.body.enable = true}, delay: Math.round(Math.random() * (8500 - 3000) + 3000), callbackScope: this, loop: true});          
         this.wallpaper;
         cursors = this.input.keyboard.createCursorKeys();
         keyW =  this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
@@ -50,6 +52,7 @@ export default class Game extends Phaser.Scene{
         keyD =  this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyE =  this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
         keyPeriod = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.PERIOD);
+        newpos=true;
     }
     preload(){
         this.load.spritesheet('robot1', 'Assets/andar-sheet1.png', { frameWidth: 40, frameHeight: 50 });
@@ -112,6 +115,7 @@ export default class Game extends Phaser.Scene{
         new Employer(this, 380, 463, 'employee').anims.play('l', true);
         new Employer(this, 820, 245, 'employee').anims.play('l', true);
         new Employer(this, 300, 245, 'employee').anims.play('l', true);
+        
         missions2.push(this.a = this.add.image(585,607, 'missionj2'));
         missions2.push(this.b = this.add.image(755,413, 'missionj2'));
         missions2.push(this.c =this.add.image(380,413, 'missionj2'));
@@ -144,6 +148,7 @@ export default class Game extends Phaser.Scene{
         for(let i=0; i<averias.length; i++){
             this.physics.add.collider(this.platforms, averias[i]);
         }  
+
         this.physics.world
         keyPeriod.on("down", function(){
             for(let i=0; i<averias.length; i++){  
@@ -154,6 +159,12 @@ export default class Game extends Phaser.Scene{
                     averias[i].body.enable = false;
                     averias[i].anims.play(averias[i].key[1], true);
                     console.log(averias[i].a, averias[i].sprite);
+                }
+            }
+            for(let i=0; i<missions2.length; i++){  
+                if ((player2.x < missions2[i].x+85) && (player2.x > missions2[i].x-85) && (player2.y > missions2[i].y-85) && (player2.y < missions2[i].y+120) && (missions2[i].visible==true)){
+                    newpos=true;
+                    timep2 += 5000;
                 }
             }
         });
@@ -169,6 +180,7 @@ export default class Game extends Phaser.Scene{
                     averias[i].anims.play(averias[i].key[1], true);
                     console.log(averias[i].a, averias[i].sprite);
                 }
+
             }
             for(let i=0; i<missions1.length; i++){  
                 if ((player1.x < missions1[i].x+85) && (player1.x > missions1[i].x-85) && (player1.y > missions1[i].y-85) && (player1.y < missions1[i].y+120) && (missions1[i].visible==true)){
@@ -176,19 +188,18 @@ export default class Game extends Phaser.Scene{
                     timep1 += 5000;
                 }
             }
-        });   
+        });      
         this.style = { font: "30px OCR A", fill: "#000000" };
-        text1=this.add.text(50, 100,this.style); 
-        text2=this.add.text(500, 100,this.style); 
+        text1=this.add.text(50, 25,'Tiempo del J1: ',this.style); 
+        text2=this.add.text(600, 25,'Tiempo del J2: ',this.style); 
     }
     update(time, delta){
         text1.setText('Tiempo del J1: ' + Math.round(timep1- time));
         text2.setText('Tiempo del J2: ' + Math.round(timep2- time));
-        
-        //console.log(time);
+
         button1.x=player1.x;
         button1.y=player1.y - 50;
-        button1.setVisible(false); 
+        button1.setVisible(false);
         button2.x=player2.x;
         button2.y=player2.y - 50;
         button2.setVisible(false);
@@ -218,23 +229,38 @@ export default class Game extends Phaser.Scene{
                 button1.setVisible(true);
             }  
         }
-        
+
+        for(let i=0; i<missions2.length; i++){
+            if ((player2.x < missions2[i].x+85) && (player2.x > missions2[i].x-85) && (player2.y > missions2[i].y-85) && (player2.y < missions2[i].y+120) && (missions2[i].visible==true)){
+                button2.x=player2.x;
+                button2.y=player2.y - 50;
+                button2.setVisible(true);
+            }  
+        }
+
         //Control of the clouds
         this.children = this.group.getChildren();
 
         Phaser.Actions.IncXY(this.children, 1, 1);
         Phaser.Actions.WrapInRectangle(this.children, this.rect);
-        
+
+        //console.log(time);
         if (time > timep1){
             this.scene.start('Gamej2');
         }
         if(time > timep2){
             this.scene.start('Gamej1');
         }
-        if(averias.length == 0 && time > error){
-            this.scene.start('gameOver');
+        for(let h = 0; h<averias.length; h++){
+            if(averias[h].a == true){
+                this.cont++;
+                console.log(this.cont);
+            }if(this.cont == averias.length && time > (this.error - 500)){
+                this.scene.start('gameOver');
+            }
         }
-        
+        this.cont = 0;
+         
         if(time > this.error){
             do{
                 this.posi = Math.round(Math.random() * ((averias.length-1) - 0) + 0);
@@ -243,11 +269,12 @@ export default class Game extends Phaser.Scene{
             averias[this.posi].anims.play(averias[this.posi].key[0], true);
             averias[this.posi].body.enable = true;
             collider = this.physics.add.collider(averias[this.posi], player1, function no(){player1.velocityX = 0}, null, this);
-            collider = this.physics.add.collider(averias[this.posi], player2, function no(){player2.velocityX = 0}, null, this);
+            collider = this.physics.add.collider(averias[this.posi], player2, function no(){player1.velocityX = 0}, null, this);
             averias[this.posi].a = true;
             console.log(averias[this.posi].a);
             this.error+=25000;     
         }
+
         if (keyA.isDown)
         {
             player1.flipX = true;
@@ -312,3 +339,4 @@ export default class Game extends Phaser.Scene{
         }
     }
 }
+
