@@ -1,0 +1,6 @@
+Al abrir el editor de codigo de preferencia hacer lo siguiente para descargarse el npm.
+Para abrir terminal: ctrl+ñ 
+Introducir en terminal: npm init
+Continuar, pulsando enter, por la terminal hasta que vuelva a salir la derección de la carpeta donde tengas almacenado el programa
+Para terminar introduce el siguiente código: npm install phaser -y
+Con Go live ya se puede juagr el videojuego en tu navegador web predeterminado.
