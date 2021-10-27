@@ -30,8 +30,8 @@ export default class Game extends Phaser.Scene{
     init(){
         collider;
         //combo = this.input.keyboard.createCombo();
-        timep1 = 20000;
-        timep2 = 20000;
+        timep1 = 50000;
+        timep2 = 50000;
         button1;
         button2;
         this.platforms;
@@ -101,7 +101,7 @@ export default class Game extends Phaser.Scene{
         this.platforms.create(700, 341, 'platform2C').setScale(0.83).refreshBody();
         this.platforms.create(35, 341, 'platform2L').setScale(0.83).refreshBody();
         this.platforms.create(5, 245, 'wall1').setScale(0.7).refreshBody();
-        this.platforms.create(1077, 247, 'wall1').setScale(0.85).refreshBody();
+        this.platforms.create(1077, 240, 'wall1').setScale(0.63).refreshBody();
         this.platforms.create(47, 445, 'wall1').setScale(0.63).refreshBody();
         this.platforms.create(1067, 445, 'wall1').setScale(0.63).refreshBody();
         this.platforms.create(651, 545, 'platform1C').setScale(0.83).refreshBody();
