@@ -19,5 +19,4 @@ https://trello.com/b/Ua3ihzwg/juegos-en-red
 ## Créditos externos
 Música utilizada: https://www.youtube.com/watch?v=C1DLEjODcjI
 
-## Diagrama de flujo Under Pressure
-![Diagrama de Flujo](/Imagenes%20Archivo%20README/Diagrama%20de%20Flujo%20Under%20Pressure.png)
+
