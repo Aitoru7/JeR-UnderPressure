@@ -1,0 +1,18 @@
+Tamaño por piso:
+1200x1600
+
+Tamaño total sin suelos:
+1200x6000
+
+Tamaño de los brodes:
+250 por cada lado
+
+Tamaño del suelo:
+1200x100:
+
+tamaño total con suelo del edificio:
+1700x6500
+
+Tamaño del canvas:
+1700x7000 más o menos (habrá que pensar si se pondrá tejado, se dejarán más pixeles por arriba donde poner cielo...)
+--Por ejemplo 500 pixeles mas arriba...
