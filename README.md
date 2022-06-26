@@ -16,6 +16,9 @@ Marcos Toledo Sánchez, m.toledo.2019@alumnos.urjc.es, marcosto29
 ## Enlace al tablero de Trello:
 https://trello.com/b/Ua3ihzwg/juegos-en-red
 
+## Enlace al video de youtube explicando el proyecto:
+https://youtu.be/crDwd5P6RxA
+
 ## Créditos externos
 Música utilizada: https://www.youtube.com/watch?v=C1DLEjODcjI
 
